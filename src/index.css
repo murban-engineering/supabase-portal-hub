@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;700;800;900&family=Oswald:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark industrial theme */
+    --background: 220 20% 6%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 220 20% 6%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 15% 20%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 210 70% 50%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 15%;
+    --ring: 210 70% 50%;
+
+    --radius: 0.5rem;
+
+    /* Custom tokens */
+    --nav-background: 220 18% 8%;
+    --nav-active: 215 25% 25%;
+    --nav-hover: 220 15% 15%;
+    
+    --hero-overlay: linear-gradient(to bottom, 
+      hsla(220, 20%, 6%, 0.4) 0%,
+      hsla(220, 20%, 6%, 0.6) 50%,
+      hsla(220, 20%, 6%, 0.8) 100%
+    );
+    
+    --logo-red: 4 80% 50%;
+    --logo-blue: 215 90% 40%;
+    
+    --text-headline: 0 0% 100%;
+    --text-subtitle: 220 10% 75%;
+    --text-label: 160 50% 55%;
+  }
+
+  .dark {
+    --background: 220 20% 6%;
+    --foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  h1, h2, h3 {
+    @apply font-bold tracking-wide;
+  }
+}
+
+@layer components {
+  .brand-wordmark {
+    font-family: 'Oswald', 'Futura Condensed Extra Bold', 'Futura', 'Eurostile', 'Trade Gothic Condensed', 'Arial Narrow', system-ui, sans-serif;
+    font-stretch: condensed;
+  }
+
+  .brand-wordmark__murban {
+    letter-spacing: 0.035em;
+    transform: scaleX(0.9);
+    transform-origin: left center;
+  }
+
+  .brand-wordmark__engineering {
+    letter-spacing: 0.26em;
+  }
+
+  .nav-pill {
+    @apply bg-nav/85 rounded-full px-1 py-1 flex items-center gap-0.5 md:gap-1;
+  }
+  
+  .nav-item {
+    @apply px-3 md:px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 text-center flex-1 md:flex-none;
+  }
+  
+  .nav-item-active {
+    @apply bg-nav-active text-white;
+  }
+  
+  .nav-item-inactive {
+    @apply text-muted-foreground hover:text-white hover:bg-nav-hover;
+  }
+  
+  .hero-title {
+    @apply text-5xl md:text-7xl lg:text-8xl font-bold tracking-[0.05em] text-white;
+  }
+  
+  .hero-subtitle {
+    @apply text-lg md:text-xl text-subtitle max-w-2xl mx-auto;
+  }
+  
+  .portal-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.02em] text-white;
+  }
+  
+  .cta-button {
+    @apply inline-flex items-center gap-3 text-white text-sm font-medium uppercase tracking-widest;
+  }
+  
+  .cta-icon {
+    @apply w-10 h-10 rounded-full bg-muted flex items-center justify-center;
+  }
+  
+  .search-input {
+    @apply w-full bg-white text-gray-900 rounded-full py-4 px-6 pl-14 text-lg placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-accent;
+  }
+  
+  .contact-value {
+    @apply text-[1.4rem] md:text-[2rem] text-subtitle font-normal tracking-normal leading-[1.1];
+  }
+  
+  .contact-label {
+    @apply text-[0.8rem] md:text-[0.95rem] text-muted-foreground font-normal tracking-normal mt-1;
+  }
+}
+
+@layer utilities {
+  .text-subtitle {
+    color: hsl(var(--text-subtitle));
+  }
+  
+  .text-label {
+    color: hsl(var(--text-label));
+  }
+  
+  .bg-nav {
+    background-color: hsl(var(--nav-background));
+  }
+  
+  .bg-nav-active {
+    background-color: hsl(var(--nav-active));
+  }
+  
+  .bg-nav-hover {
+    background-color: hsl(var(--nav-hover));
+  }
+}

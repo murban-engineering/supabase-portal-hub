@@ -14,26 +14,32 @@ export type Database = {
   }
   public: {
     Tables: {
-      profiles: {
+      clients: {
         Row: {
-          avatar_url: string | null
+          app_url: string
           created_at: string
-          display_name: string | null
           id: string
+          name: string
+          password: string
+          terminal_location: string | null
           updated_at: string
         }
         Insert: {
-          avatar_url?: string | null
+          app_url: string
           created_at?: string
-          display_name?: string | null
-          id: string
+          id?: string
+          name: string
+          password: string
+          terminal_location?: string | null
           updated_at?: string
         }
         Update: {
-          avatar_url?: string | null
+          app_url?: string
           created_at?: string
-          display_name?: string | null
           id?: string
+          name?: string
+          password?: string
+          terminal_location?: string | null
           updated_at?: string
         }
         Relationships: []
