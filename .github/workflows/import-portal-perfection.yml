@@ -1,10 +1,9 @@
 name: Import portal-perfection
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: write
@@ -16,6 +15,7 @@ jobs:
       - name: Check out destination
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Replace destination contents with source repository
@@ -39,4 +39,4 @@ jobs:
           fi
 
           git commit -m "Replace contents with portal-perfection"
-          git push
+          git push origin HEAD:main
