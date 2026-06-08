@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      clients: {
+        Row: {
+          app_url: string
+          created_at: string
+          id: string
+          name: string
+          password: string
+          terminal_location: string | null
+          updated_at: string
+        }
+        Insert: {
+          app_url: string
+          created_at?: string
+          id?: string
+          name: string
+          password: string
+          terminal_location?: string | null
+          updated_at?: string
+        }
+        Update: {
+          app_url?: string
+          created_at?: string
+          id?: string
+          name?: string
+          password?: string
+          terminal_location?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
