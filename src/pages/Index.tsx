@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import BrandWordmark from "@/components/BrandWordmark";
-const heroImage = "/aerial-view-gas-oil-refinery-oil-industry.jpg";
+const heroImage = `${import.meta.env.BASE_URL}aerial-view-gas-oil-refinery-oil-industry.jpg`;
 
 const Index = () => {
   return (
