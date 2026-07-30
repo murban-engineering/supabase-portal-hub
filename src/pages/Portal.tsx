@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const heroImage = "/aerial-view-gas-oil-refinery-oil-industry.jpg";
+const heroImage = `${import.meta.env.BASE_URL}aerial-view-gas-oil-refinery-oil-industry.jpg`;
 
 interface Client {
   id: string;
