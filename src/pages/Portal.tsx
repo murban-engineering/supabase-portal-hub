@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Search, Lock, ArrowLeft, KeyRound, MapPin } from "lucide-react";
+import { Search, Lock, ArrowLeft, KeyRound, MapPin, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -292,6 +293,14 @@ const Portal = () => {
                   No companies found matching "{searchTerm}"
                 </p>
               )}
+
+              <Link
+                to="/admin"
+                className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white transition-colors"
+              >
+                <Shield className="w-4 h-4" />
+                Login as Admin
+              </Link>
             </div>
           )}
 
