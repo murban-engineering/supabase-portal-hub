@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 import Logo from "./Logo";
-import BrandWordmark from "./BrandWordmark";
+
 
 const Navigation = () => {
   const location = useLocation();
@@ -46,10 +46,6 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 px-3 md:px-0 py-1 md:py-0">
         <Link to="/" className="flex items-center gap-2 md:gap-3 min-w-0">
           <Logo />
-          <BrandWordmark
-            murbanClassName="text-[18px] md:text-2xl tracking-[0.02em]"
-            engineeringClassName="text-[6px] md:text-[9px] tracking-[0.18em] md:tracking-[0.26em] mt-0.5"
-          />
         </Link>
         
         <div ref={navRef}>
