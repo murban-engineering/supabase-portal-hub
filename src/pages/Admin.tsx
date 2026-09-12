@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Lock, Maximize2, ArrowLeft, RefreshCw } from "lucide-react";
+import {
+  Lock,
+  ArrowLeft,
+  RefreshCw,
+  LogOut,
+  Search,
+  MapPin,
+  ExternalLink,
+} from "lucide-react";
 import Layout from "@/components/Layout";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -119,71 +127,88 @@ const Admin = () => {
     );
   }
 
+  const visible = clients.filter((c) =>
+    c.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <Layout>
-      <div className="min-h-screen pt-28 pb-16 px-4 md:px-8 bg-background">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-semibold text-white">
-                All Client Tanks
-              </h1>
-              <p className="text-subtitle text-sm mt-1">
-                {clients.length} client dashboards
-              </p>
-            </div>
+      <div className="relative min-h-screen flex items-start justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-background/80" />
+
+        <div className="relative z-10 w-full max-w-3xl px-6 pt-28 pb-16 text-center animate-fade-in">
+          <div className="flex items-center justify-between mb-8">
+            <button
+              onClick={() => {
+                setAuthed(false);
+                setPassword("");
+              }}
+              className="flex items-center gap-2 text-sm text-subtitle hover:text-white transition-colors"
+            >
+              <LogOut className="w-4 h-4" /> Log out
+            </button>
             <button
               onClick={() => {
                 fetchClients();
-                setReloadKey((k) => k + 1);
               }}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/60 text-white text-sm hover:bg-secondary transition-colors"
+              className="flex items-center gap-2 text-sm text-subtitle hover:text-white transition-colors"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
               Refresh
             </button>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {clients.map((client) => (
-              <div
-                key={client.id}
-                className="rounded-2xl overflow-hidden border border-white/10 bg-secondary/40"
-              >
-                <div className="flex items-center justify-between gap-3 px-4 py-3">
-                  <div className="min-w-0">
-                    <p className="text-white text-sm font-semibold truncate">
-                      {client.name}
-                    </p>
-                    {client.terminal_location && (
-                      <p className="text-subtitle text-xs truncate">
-                        {client.terminal_location}
-                      </p>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => setFocused(client)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/10 text-accent hover:bg-accent hover:text-white text-xs font-semibold transition-colors"
-                  >
-                    <Maximize2 className="w-3.5 h-3.5" /> Open
-                  </button>
-                </div>
-                <div className="h-64 bg-black/40">
-                  <iframe
-                    key={`${client.id}-${reloadKey}`}
-                    src={client.app_url}
-                    className="h-full w-full border-0"
-                    title={client.name}
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            ))}
+          <h1 className="text-2xl md:text-3xl font-semibold text-white">
+            All Clients
+          </h1>
+          <p className="text-subtitle text-sm mt-2 mb-8">
+            {clients.length} client apps available
+          </p>
+
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" />
+            <input
+              type="text"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              placeholder="Filter clients..."
+              className="search-input"
+            />
           </div>
 
-          {!loading && clients.length === 0 && (
-            <p className="text-subtitle text-sm">No clients found.</p>
-          )}
+          <div className="mt-4 bg-white rounded-2xl shadow-lg overflow-hidden text-left max-h-[420px] overflow-y-auto">
+            {visible.map((client) => (
+              <div
+                key={client.id}
+                className="flex items-center justify-between gap-4 px-6 py-4 border-b border-gray-100 last:border-0"
+              >
+                <div className="min-w-0">
+                  <p className="text-gray-900 font-medium truncate">
+                    {client.name}
+                  </p>
+                  {client.terminal_location && (
+                    <p className="flex items-center gap-1 text-xs text-gray-500 mt-0.5">
+                      <MapPin className="w-3.5 h-3.5" />
+                      {client.terminal_location}
+                    </p>
+                  )}
+                </div>
+                <button
+                  onClick={() => setFocused(client)}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-accent text-white text-xs font-semibold hover:opacity-90 transition-opacity shrink-0"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" /> Open
+                </button>
+              </div>
+            ))}
+            {visible.length === 0 && (
+              <p className="px-6 py-6 text-gray-500 text-sm">No clients found.</p>
+            )}
+          </div>
         </div>
       </div>
     </Layout>
