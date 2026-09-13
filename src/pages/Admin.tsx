@@ -13,7 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const heroImage = `${import.meta.env.BASE_URL}aerial-view-gas-oil-refinery-oil-industry.jpg`;
 
-const ADMIN_PASSWORD = "MURBAN-ADMIN-2026";
+const ADMIN_PASSWORD = "M001";
 
 interface Client {
   id: string;
