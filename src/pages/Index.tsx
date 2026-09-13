@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import Layout from "@/components/Layout";
 const heroImage = `${import.meta.env.BASE_URL}aerial-view-gas-oil-refinery-oil-industry.jpg`;
-const textLogo = `${import.meta.env.BASE_URL}murban-text-logo.png`;
+const homeLogo = `${import.meta.env.BASE_URL}murban-text-logo.png`;
 
 const Index = () => {
   return (
@@ -30,7 +30,7 @@ const Index = () => {
         <div className="relative z-10 text-center px-6 animate-fade-in">
           <h1 className="mb-8 flex justify-center">
             <img
-              src={textLogo}
+              src={homeLogo}
               alt="MURBAN ENGINEERING LTD"
               className="h-auto w-full max-w-[420px] md:max-w-[560px] object-contain"
             />
