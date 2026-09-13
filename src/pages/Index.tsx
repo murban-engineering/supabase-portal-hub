@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import Layout from "@/components/Layout";
-import BrandWordmark from "@/components/BrandWordmark";
 const heroImage = `${import.meta.env.BASE_URL}aerial-view-gas-oil-refinery-oil-industry.jpg`;
+const textLogo = `${import.meta.env.BASE_URL}murban-text-logo.png`;
 
 const Index = () => {
   return (
@@ -28,10 +28,11 @@ const Index = () => {
         
         {/* Content */}
         <div className="relative z-10 text-center px-6 animate-fade-in">
-          <h1 className="hero-title mb-8">
-            <BrandWordmark
-              murbanClassName="text-5xl md:text-7xl lg:text-8xl tracking-[0.06em]"
-              engineeringClassName="text-lg md:text-2xl lg:text-3xl tracking-[0.45em] mt-3 pl-[0.45em]"
+          <h1 className="mb-8 flex justify-center">
+            <img
+              src={textLogo}
+              alt="MURBAN ENGINEERING LTD"
+              className="h-auto w-full max-w-[420px] md:max-w-[560px] object-contain"
             />
           </h1>
           

@@ -27,6 +27,7 @@ const Admin = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [clients, setClients] = useState<Client[]>([]);
+  const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState<Client | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
