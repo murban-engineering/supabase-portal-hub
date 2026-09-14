@@ -7,7 +7,9 @@ import {
   Search,
   MapPin,
   ExternalLink,
+  Shield,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -22,6 +24,29 @@ interface Client {
   terminal_location: string | null;
 }
 
+const Backdrop = () => (
+  <>
+    <div
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${heroImage})` }}
+    />
+    <div
+      className="absolute inset-0"
+      style={{
+        background: `linear-gradient(to bottom, 
+          hsla(220, 20%, 6%, 0.6) 0%,
+          hsla(220, 20%, 6%, 0.7) 50%,
+          hsla(220, 20%, 6%, 0.88) 100%
+        )`,
+      }}
+    />
+    <div className="absolute left-[15%] top-1/4 w-16 h-16 border border-white/10 rotate-45 hidden lg:block" />
+    <div className="absolute right-[15%] top-1/3 w-12 h-12 border border-white/10 rotate-12 hidden lg:block" />
+    <div className="absolute left-[10%] bottom-1/3 w-10 h-10 border border-white/10 -rotate-12 hidden lg:block" />
+    <div className="absolute right-[20%] bottom-1/4 w-14 h-14 border border-white/10 rotate-45 hidden lg:block" />
+  </>
+);
+
 const Admin = () => {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
@@ -30,7 +55,6 @@ const Admin = () => {
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState<Client | null>(null);
-  const [reloadKey, setReloadKey] = useState(0);
 
   const fetchClients = async () => {
     if (!supabase) return;
@@ -50,7 +74,7 @@ const Admin = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
+    if (password.trim() === ADMIN_PASSWORD) {
       setAuthed(true);
       setError("");
     } else {
@@ -62,19 +86,21 @@ const Admin = () => {
     return (
       <Layout>
         <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${heroImage})` }}
-          />
-          <div className="absolute inset-0 bg-background/80" />
-          <div className="relative z-10 w-full max-w-md px-6 text-center animate-fade-in">
-            <h1 className="portal-title mb-4">Admin Console</h1>
-            <p className="text-subtitle text-sm mb-8">
-              One password. Every client tank dashboard in one place.
+          <Backdrop />
+          <div className="relative z-10 w-full max-w-2xl px-6 text-center animate-fade-in">
+            <span className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-white/15 bg-white/5 text-xs uppercase tracking-[0.25em] text-subtitle">
+              <Shield className="w-3.5 h-3.5" /> Admin Access
+            </span>
+
+            <h1 className="portal-title mb-6">Admin Console</h1>
+
+            <p className="hero-subtitle mb-12">
+              One password unlocks every client tank dashboard in a single view.
             </p>
-            <form onSubmit={handleLogin}>
+
+            <form onSubmit={handleLogin} className="max-w-md mx-auto">
               <div className="relative">
-                <Lock className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Lock className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" />
                 <input
                   type="password"
                   value={password}
@@ -82,8 +108,8 @@ const Admin = () => {
                     setPassword(e.target.value);
                     setError("");
                   }}
-                  placeholder="Admin password"
-                  className="search-input text-base"
+                  placeholder="Enter admin password"
+                  className="search-input"
                   autoComplete="current-password"
                   autoFocus
                 />
@@ -91,11 +117,18 @@ const Admin = () => {
               {error && <p className="mt-3 text-red-400 text-sm">{error}</p>}
               <button
                 type="submit"
-                className="mt-6 w-full py-3 bg-white text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-colors"
+                className="mt-6 px-10 py-3 bg-white text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-colors"
               >
                 Enter Console
               </button>
             </form>
+
+            <Link
+              to="/portal"
+              className="mt-8 inline-flex items-center gap-2 text-sm text-subtitle hover:text-white transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back to client portal
+            </Link>
           </div>
         </div>
       </Layout>
@@ -135,11 +168,7 @@ const Admin = () => {
   return (
     <Layout>
       <div className="relative min-h-screen flex items-start justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        />
-        <div className="absolute inset-0 bg-background/80" />
+        <Backdrop />
 
         <div className="relative z-10 w-full max-w-3xl px-6 pt-28 pb-16 text-center animate-fade-in">
           <div className="flex items-center justify-between mb-8">
@@ -147,15 +176,14 @@ const Admin = () => {
               onClick={() => {
                 setAuthed(false);
                 setPassword("");
+                setFilter("");
               }}
               className="flex items-center gap-2 text-sm text-subtitle hover:text-white transition-colors"
             >
               <LogOut className="w-4 h-4" /> Log out
             </button>
             <button
-              onClick={() => {
-                fetchClients();
-              }}
+              onClick={fetchClients}
               className="flex items-center gap-2 text-sm text-subtitle hover:text-white transition-colors"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
@@ -163,10 +191,8 @@ const Admin = () => {
             </button>
           </div>
 
-          <h1 className="text-2xl md:text-3xl font-semibold text-white">
-            All Clients
-          </h1>
-          <p className="text-subtitle text-sm mt-2 mb-8">
+          <h1 className="portal-title mb-4">All Clients</h1>
+          <p className="text-subtitle text-sm mb-8">
             {clients.length} client apps available
           </p>
 
@@ -185,7 +211,7 @@ const Admin = () => {
             {visible.map((client) => (
               <div
                 key={client.id}
-                className="flex items-center justify-between gap-4 px-6 py-4 border-b border-gray-100 last:border-0"
+                className="flex items-center justify-between gap-4 px-6 py-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors"
               >
                 <div className="min-w-0">
                   <p className="text-gray-900 font-medium truncate">
