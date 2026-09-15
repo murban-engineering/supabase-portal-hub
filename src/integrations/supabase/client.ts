@@ -3,8 +3,15 @@ import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 import { brokeredPreviewStorage } from './previewAuthStorage';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+// Public project URL + publishable (anon) key. Safe to ship in the browser bundle;
+// used as a fallback so static deployments (e.g. GitHub Pages) always work.
+const FALLBACK_SUPABASE_URL = "https://spxlvlipqfacrqbfoocd.supabase.co";
+const FALLBACK_SUPABASE_PUBLISHABLE_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNweGx2bGlwcWZhY3JxYmZvb2NkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1NzE2ODksImV4cCI6MjA5NjE0NzY4OX0.YiYZMsK9tHBeuew23e3Gqxu24x60ri1uxZf_OmJmfbA";
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || FALLBACK_SUPABASE_URL;
+const SUPABASE_PUBLISHABLE_KEY =
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || FALLBACK_SUPABASE_PUBLISHABLE_KEY;
 const hasSupabaseConfig = Boolean(SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY);
 
 // Import the supabase client like this:
